@@ -1,13 +1,14 @@
-export PATH=$PATH:/usr/local/mysql/bin
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 export PS1='\h:\w$ '
 export PORT=3000
 export SOLO_DATABASE_PASSWORD=123
 export CLICOLORS=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 export EDITOR='subl -w'
+export RAILS_NO_DEBUG_ASSETS=1
 
 # Local variables
-PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
+PATH="/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH"
 RED="\[\033[0;31m\]"
 YELLOW="\[\033[0;33m\]"
 WHITE="\[\033[0;00m\]"
@@ -23,12 +24,12 @@ function r() {
   rails $*
 }
 
-function gd() {
-  git diff
-}
-
 function gc(){
-  git add -A && git commit -am "$*"
+  if [ "$*" == "" ]; then
+    echo "[ERROR] Add commit message"
+  else
+    git add -A && git commit -am "$*"
+  fi
 }
 
 function gcp() {
@@ -40,12 +41,9 @@ function server() {
   python -m SimpleHTTPServer "$port"
 }
 
-# Node Completion - Auto-generated, do not touch.
-shopt -s progcomp
-for f in $(command ls ~/.node-completion); do
-  f="$HOME/.node-completion/$f"
-  test -f "$f" && . "$f"
-done
+function title {
+  echo -ne "\033]0;"$*"\007"
+}
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
@@ -67,20 +65,36 @@ fi
 # Git
 alias gs="git status"
 alias gl='git log --oneline --color'
+alias gd='git diff'
+alias gco='git checkout'
+alias gh='git history'
+alias gb='git branch'
 
 # Rails/Ruby
 alias wip="bundle exec cucumber -p wip"
 alias b="bundle exec"
 alias rb='ruby'
+alias setup='bundle && rake db:migrate'
+# Branch Completion script
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
+eval "$(rbenv init -)"
 
 # Misc
 alias ll='ls -alFGh'
 alias la='ls -A'
 alias l='ls -CF'
-alias vim='/usr/local/Cellar/vim/7.4.488/bin/vim'
 alias vi='vim'
 alias ss='source ~/.bash_profile'
 alias lp=''
+alias sub='sublime'
 
-export NVM_DIR="/Users/danielravina/.nvm"
+export BOXEN_SOCKET_DIR=/usr/local/var/project-sockets
+
+
+export NVM_DIR="/Users/daniel_ravina/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+source ~/.nvm/nvm.sh
+
