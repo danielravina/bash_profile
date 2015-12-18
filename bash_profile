@@ -74,7 +74,10 @@ alias gb='git branch'
 alias wip="bundle exec cucumber -p wip"
 alias b="bundle exec"
 alias rb='ruby'
-alias setup='bundle && rake db:migrate'
+alias setup='bundle && b rake db:migrate'
+alias rake='b rake'
+alias rspec='spring rspec'
+
 # Branch Completion script
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
@@ -90,11 +93,13 @@ alias vi='vim'
 alias ss='source ~/.bash_profile'
 alias lp=''
 alias sub='sublime'
+alias subl='sub'
+alias profile='sub ~/.bash_profile'
 
 export BOXEN_SOCKET_DIR=/usr/local/var/project-sockets
 
+export SEMAPHORE=1
 
 export NVM_DIR="/Users/daniel_ravina/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 source ~/.nvm/nvm.sh
-
