@@ -5,7 +5,6 @@ export SOLO_DATABASE_PASSWORD=123
 export CLICOLORS=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
 export EDITOR='subl -w'
-export RAILS_NO_DEBUG_ASSETS=1
 
 # Local variables
 PATH="/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH"
@@ -45,11 +44,14 @@ function title {
   echo -ne "\033]0;"$*"\007"
 }
 
+function command_exists() {
+  type "$1" &> /dev/null ;
+}
+
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 export PATH=$PATH:/Users/danielravina/Android/sdk/tools
 export PATH=$PATH:/Users/danielravina/Android/sdk/platform_tools
-
 
 ## Aliases ##
 
@@ -83,8 +85,6 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-eval "$(rbenv init -)"
-
 # Misc
 alias ll='ls -alFGh'
 alias la='ls -A'
@@ -95,11 +95,17 @@ alias lp=''
 alias sub='sublime'
 alias subl='sub'
 alias profile='sub ~/.bash_profile'
+alias lunchbox='ssh ubuntu@52.27.52.181 -i ~/.ssh/danielravina.pem'
 
-export BOXEN_SOCKET_DIR=/usr/local/var/project-sockets
-
-export SEMAPHORE=1
-
-export NVM_DIR="/Users/daniel_ravina/.nvm"
+export NVM_DIR="/Users/$(whoami)/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 source ~/.nvm/nvm.sh
+
+if command_exists rbenv; then
+  eval "$(rbenv init -)"
+fi
+
+# acl related
+export BOXEN_SOCKET_DIR=/usr/local/var/project-sockets
+export SEMAPHORE=1
+
